@@ -27,7 +27,19 @@ class BiddingController extends Controller
     public function show(DisposalEvent $event)
     {
         $assets = $event->assets()->where('status', 'available')->get();
-        return view('bidder.events.show', compact('event', 'assets'));
+
+        // Get bidder's existing bids for this event if logged in and registered
+        $myBids = collect();
+        if (Auth::check() && Auth::user()->bidder) {
+            $myBids = Auth::user()->bidder->bids()
+                ->whereHas('asset', function ($query) use ($event) {
+                    $query->where('disposal_event_id', $event->id);
+                })
+                ->get()
+                ->keyBy('asset_id');
+        }
+
+        return view('bidder.events.show', compact('event', 'assets', 'myBids'));
     }
 
     public function placeBid(Request $request, Asset $asset)
@@ -141,6 +153,12 @@ class BiddingController extends Controller
     public function myBids()
     {
         $bidder = Auth::user()->bidder;
+
+        if (!$bidder) {
+            return redirect()->route('bidder.register')
+                ->with('error', 'Please register as a bidder first.');
+        }
+
         $bids = $bidder->bids()
             ->with('asset.disposalEvent')
             ->latest('bid_time')
@@ -155,6 +173,11 @@ class BiddingController extends Controller
     public function myWinnings()
     {
         $bidder = Auth::user()->bidder;
+
+        if (!$bidder) {
+            return redirect()->route('bidder.register')
+                ->with('error', 'Please register as a bidder first.');
+        }
 
         $winningBids = $bidder->bids()
             ->where('status', 'winner')

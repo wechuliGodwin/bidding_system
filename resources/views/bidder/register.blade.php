@@ -12,17 +12,17 @@
                 </div>
                 <div class="card-body">
                     @if(session('error'))
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            {{ session('error') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                        </div>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ session('error') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
                     @endif
 
                     @if(session('success'))
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            {{ session('success') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                        </div>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
                     @endif
 
                     <form action="{{ route('bidder.register.store') }}" method="POST" enctype="multipart/form-data">
@@ -36,70 +36,70 @@
                                 <option value="company" {{ old('bidder_type') == 'company' ? 'selected' : '' }}>Company</option>
                             </select>
                             @error('bidder_type')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                            <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div id="company-fields" style="display: none;">
                             <div class="mb-3">
                                 <label for="company_name" class="form-label">Company Name</label>
-                                <input type="text" name="company_name" id="company_name" 
-                                       class="form-control @error('company_name') is-invalid @enderror" 
-                                       value="{{ old('company_name') }}">
+                                <input type="text" name="company_name" id="company_name"
+                                    class="form-control @error('company_name') is-invalid @enderror"
+                                    value="{{ old('company_name') }}">
                                 @error('company_name')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             <div class="mb-3">
                                 <label for="registration_number" class="form-label">Registration Number</label>
-                                <input type="text" name="registration_number" id="registration_number" 
-                                       class="form-control @error('registration_number') is-invalid @enderror" 
-                                       value="{{ old('registration_number') }}">
+                                <input type="text" name="registration_number" id="registration_number"
+                                    class="form-control @error('registration_number') is-invalid @enderror"
+                                    value="{{ old('registration_number') }}">
                                 @error('registration_number')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
 
                         <div class="mb-3">
                             <label for="phone" class="form-label">Phone Number <span class="text-danger">*</span></label>
-                            <input type="tel" name="phone" id="phone" 
-                                   class="form-control @error('phone') is-invalid @enderror" 
-                                   value="{{ old('phone') }}" required>
+                            <input type="tel" name="phone" id="phone"
+                                class="form-control @error('phone') is-invalid @enderror"
+                                value="{{ old('phone') }}" required>
                             @error('phone')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                            <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="mb-3">
                             <label for="address" class="form-label">Address <span class="text-danger">*</span></label>
-                            <textarea name="address" id="address" rows="3" 
-                                      class="form-control @error('address') is-invalid @enderror" 
-                                      required>{{ old('address') }}</textarea>
+                            <textarea name="address" id="address" rows="3"
+                                class="form-control @error('address') is-invalid @enderror"
+                                required>{{ old('address') }}</textarea>
                             @error('address')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                            <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="mb-3">
                             <label for="documents" class="form-label">Upload Documents <span class="text-danger">*</span></label>
-                            <input type="file" name="documents[]" id="documents" 
-                                   class="form-control @error('documents') is-invalid @enderror @error('documents.*') is-invalid @enderror" 
-                                   multiple accept=".pdf,.jpg,.jpeg,.png" required>
+                            <input type="file" name="documents[]" id="documents"
+                                class="form-control @error('documents') is-invalid @enderror @error('documents.*') is-invalid @enderror"
+                                multiple accept=".pdf,.jpg,.jpeg,.png" required>
                             <small class="form-text text-muted">
                                 Accepted formats: PDF, JPG, JPEG, PNG (Max 5MB per file)
                             </small>
                             @error('documents')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                            <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                             @error('documents.*')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                            <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="alert alert-info">
-                            <i class="fas fa-info-circle"></i> 
+                            <i class="fas fa-info-circle"></i>
                             Your application will be reviewed by an administrator. You will be notified once approved.
                         </div>
 
